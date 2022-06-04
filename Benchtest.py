@@ -40,32 +40,42 @@ def await_full_confirmation(client, txn, max_timeout=60):
             break
 
 
-def WalletConnect(api_endpoint,Wallet_Address,Wallet_Address2,topup,topupamount):
-    print("Connecting to Safecoin chain")
+def WalletConnect(api_endpoint,Wallet_Address,Wallet_Address2,topup,topupamount,x):
+    #print("Connecting to Safecoin chain")
     client = Client(api_endpoint)
-    print("Connected to %s :" % api_endpoint, client.is_connected())
-    print("")
+    #print("Connected to %s :" % api_endpoint, client.is_connected())
+    #print("")
+    #sender = Keypair.from_seed(bytes(PublicKey(x)))
+    
     
     sender = Keypair.from_secret_key(sender_secret_key)
-    print(sender.secret_key)
-    print(sender.public_key)
+    #print(sender.secret_key)
+    #print(sender.public_key)
         
     if(client.is_connected()):
-        if(topup == True):
-            resp = {}
-            while 'result' not in resp:
-                resp = client.request_airdrop(sender.public_key,topupamount * 1000000000)
-            txn = resp['result']
-            await_full_confirmation(client, txn)
-            #print(resp)
-            print("Topup complete")
-            print("")
-        resp = client.get_balance(sender.public_key)
-        print("balance = ", int(resp['result']['value']) / 1000000000)
-
-        
-        txn = Transaction().add(transfer(TransferParams(from_pubkey=sender.public_key, to_pubkey=Wallet_Address2, lamports=1000000)))
-        return (txn,sender,client)
+    
+        #resp = client.get_balance(sender.public_key)
+        #print("balance = ", int(resp['result']['value']) / 1000000000)
+        receiver = Keypair.from_seed(bytes(PublicKey(x)))
+        spre = 0
+        txn = Transaction().add(transfer(TransferParams(from_pubkey=sender.public_key, to_pubkey=receiver.public_key, lamports=100000)))
+        for x in range(120):
+            #try:
+                if(client.is_connected()):
+                    s = time.strftime("%S", time.gmtime())
+                    while(s == spre):
+                        s = time.strftime("%S", time.gmtime())
+                        #print("Pass")
+                    else:
+                        spre = s
+                        client.send_transaction(txn, sender)
+                        #print(client.send_transaction(txn, sender))
+                else:
+                    client = Client(api_endpoint)
+                    print("reconnect")
+            #except:
+            #    print("Failed")
+            #    pass
         
         
     else:
@@ -77,19 +87,27 @@ def WalletConnect(api_endpoint,Wallet_Address,Wallet_Address2,topup,topupamount)
 
 
 
-def threaded(txn,sender,client):
-    for x in range(1000):
-        try:
-            client.send_transaction(txn, sender)
-        except:
-            pass
 
-
-txn,sender,client = WalletConnect(api_endpoint,Wallet_Address1,Wallet_Address2,topup,topupamount)
-print("setup, now testing")
+#WalletConnect(api_endpoint,Wallet_Address1,Wallet_Address2,topup,topupamount)
+#print("setup, now testing")
 threads = list()
-for index in range(10000):
-        x = threading.Thread(target=threaded, args=(txn,sender,client,))
+client = Client(api_endpoint)
+if(client.is_connected()):
+        if(topup == True):
+            resp = {}
+            while 'result' not in resp:
+                resp = client.request_airdrop(sender_public_key,topupamount * 10000000)
+            txn = resp['result']
+            await_full_confirmation(client, txn)
+            #print(resp)
+            print("Topup complete")
+            print("")
+            resp = client.get_balance(sender_public_key)
+            print("balance = ", int(resp['result']['value']) / 1000000000)
+            
+
+for x in range(100):
+        x = threading.Thread(target=WalletConnect, args=(api_endpoint,Wallet_Address1,Wallet_Address2,topup,topupamount,x,))
         threads.append(x)
         x.start()
 
