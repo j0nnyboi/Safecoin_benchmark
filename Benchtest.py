@@ -25,7 +25,7 @@ sendamount = 10000000 #amount in lamports to send to start with
 sender_secret_key = b'\xbf\xcf\xb4\xf1\x90\x0c \x9bR\xd7|\x0e\x01\x8f\x05\xfe/\x9c+c\xa3\xa0\xa20k\x88\xd2\x17\xab\xab\xd0\xf1JQ\x1c\x0c~7\xcb\xfd\r\xb0[\xc1]\xbf\xc4\r\xd5\x99\xca:\xf8\xe1\nXA\x98\xb1GV\xe2L2'
 sender_public_key = "616uPrX31oL55PPLqm1SY4x72BCHRvab7Lon3vgavpf3"
 
-sender_public_key_List = ['4zvwRjXUKGfvwnParsHAS3HuSVzV5cA4McphgmoCtajS','6ASf5EcmmEHTgDJ4X4ZT5vT6iHVJBXPg5AN5YoTCpGWt',
+sender_public_key_List = ['6ASf5EcmmEHTgDJ4X4ZT5vT6iHVJBXPg5AN5YoTCpGWt',
                          '8pM1DN3RiT8vbom5u1sNryaNT1nyL8CTTW3b5PwWXRBH','HPYVwAQmskwT1qEEeRzhoomyfyupJGASQQtCXSNG8XS2',
                          'J3qYF7YJMKCqQke47UQwiHizgFUXapHxRxKmxbkar89x','J66fMDgSVVcdRgKucj1D5ssXAcQvg35JopvHNQo6cGY6',
                          'DAiJNXqRaLoixp41pNW2MovKG93QvrjM2d5Lq1eMpjpp','5EUjf4oPLzrA7w7M9EC9fDEyBBjkAVS4QgqrZhRx3G9s',
@@ -36,8 +36,7 @@ sender_public_key_List = ['4zvwRjXUKGfvwnParsHAS3HuSVzV5cA4McphgmoCtajS','6ASf5E
                          'DTpAAnGm1NGtGy177mVN5zzDqUkADEFGmyp22HAuTSGx','6L2fW53tcYXcqaGBHLfVxE5DfdtKtCEvbccVR7Wdetb1',
                          '8AAJvL1nUXNVfhTGjr4wz4tVvRZXp3du1raUHWJBX6gK','FYPRpYc4YdYhqH24AgM1tPtxkTJwcgb9KG31R4WZXYDJ']
 
-sender_secret_key_List = [b"\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00;j'\xbc\xce\xb6\xa4-b\xa3\xa8\xd0*o\rse2\x15w\x1d\xe2C\xa6:\xc0H\xa1\x8bY\xda)",
-                         b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01L\xb5\xab\xf6\xady\xfb\xf5\xab\xbc\xca\xfc\xc2i\xd8\\\xd2e\x1e\xd4\xb8\x85\xb5\x86\x9f$\x1a\xed\xf0\xa5\xba)',
+sender_secret_key_List = [b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01L\xb5\xab\xf6\xady\xfb\xf5\xab\xbc\xca\xfc\xc2i\xd8\\\xd2e\x1e\xd4\xb8\x85\xb5\x86\x9f$\x1a\xed\xf0\xa5\xba)',
                          b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02t"\xb9\x88u\x98\x06\x8e2\xc4D\x8a\x94\x9a\xdb)\r\x0fN5\xb9\xe0\x1b\x0e\xe5\xf1\xa1\xe6\x00\xfe&t',
                          b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x03\xf3\x81bnA\xe7\x02~\xa41\xbf\xe3\x00\x9e\x94\xbd\xd2Ztk\xee\xc4h\x94\x8dl<|]\xc9\xa5K',
                          b'\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x04\xfdP\xb8\xe3\xb1D\xea$O\xbfw7\xf5P\xbc\x8d\xd0\xc2e\x0b\xbc\x1a\xad\xa83\xca\x17\xff\x8d\xbf2\x9b',
@@ -74,20 +73,23 @@ def await_full_confirmation(client, txn, max_timeout=60):
             break
 
 
-def WalletConnect(api_endpoint,Wallet_Address,Wallet_Address2,topup,topupamount,x):
-    client = Client(api_endpoint    
+def WalletConnect(api_endpoint,Wallet_Address,Wallet_Address2,topup,topupamount,x,sender_secret_key_List):
+    client = Client(api_endpoint)   
     if(client.is_connected()):
+    
         sender = Keypair.from_secret_key(sender_secret_key)
         #print(sender.secret_key)
         #print(sender.public_key)
-        receiver = Keypair.from_secret_key(sender_secret_key_List[x])        
+        receiver = Keypair.from_secret_key(sender_secret_key_List[x])
+        #print(receiver.secret_key)
+        #print(receiver.public_key)
         spre = 0
         
         txnonce = Transaction().add(transfer(TransferParams(from_pubkey=sender.public_key, to_pubkey=receiver.public_key, lamports=sendamount)))
-        client.send_transaction(txnonce, sender)
-                    
+        client.send_transaction(txnonce, sender) 
+        time.sleep(10)           
         txn = Transaction().add(transfer(TransferParams(from_pubkey=sender.public_key, to_pubkey=receiver.public_key, lamports=1000)))
-        rxn = Transaction().add(transfer(TransferParams(from_pubkey=sender.public_key, to_pubkey=receiver.public_key, lamports=1000)))
+        rxn = Transaction().add(transfer(TransferParams(from_pubkey=receiver.public_key, to_pubkey=sender.public_key, lamports=1000)))
 
 
         
@@ -97,6 +99,8 @@ def WalletConnect(api_endpoint,Wallet_Address,Wallet_Address2,topup,topupamount,
                     s = time.strftime("%S", time.gmtime())
                     while(s == spre):
                         s = time.strftime("%S", time.gmtime())
+                        client.send_transaction(txn, sender)
+                        client.send_transaction(rxn, receiver)
                         #print("Pass")
                     else:
                         spre = s
@@ -138,11 +142,11 @@ if(client.is_connected()):
             print("balance = ", int(resp['result']['value']) / 1000000000)
             
 
-"""
-for x in range(20):
-        x = threading.Thread(target=WalletConnect, args=(api_endpoint,Wallet_Address1,Wallet_Address2,topup,topupamount,x,))
+
+for y in range(19):
+        x = threading.Thread(target=WalletConnect, args=(api_endpoint,Wallet_Address1,Wallet_Address2,topup,topupamount,y,sender_secret_key_List,))
         threads.append(x)
         x.start()
 
-"""
+
 print("done")
