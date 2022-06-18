@@ -19,7 +19,7 @@ Wallet_Address1 = "24n6hzEPP69hX2kg168APr7nWLsWM4sbeY6zS2vYFSh1"#"Wallet Address
 Wallet_Address2 = "9pytm5ZNTG8CG3Szdrq9W5xDVJpAztMXhmf78q211Zqp"#"Wallet Address"
 topup = True #True if you want to topup
 topupamount = 1000000 # amount to topup
-Threads = 19 #amount of threads to use(only 19 hard coded wallets)
+ThreadAmount = 19 #amount of threads to use(only 19 hard coded wallets)
 sendamount = 10000000 #amount in lamports to send to start with
 
 sender_secret_key = b'\xbf\xcf\xb4\xf1\x90\x0c \x9bR\xd7|\x0e\x01\x8f\x05\xfe/\x9c+c\xa3\xa0\xa20k\x88\xd2\x17\xab\xab\xd0\xf1JQ\x1c\x0c~7\xcb\xfd\r\xb0[\xc1]\xbf\xc4\r\xd5\x99\xca:\xf8\xe1\nXA\x98\xb1GV\xe2L2'
@@ -73,14 +73,14 @@ def await_full_confirmation(client, txn, max_timeout=60):
             break
 
 
-def WalletConnect(api_endpoint,Wallet_Address,Wallet_Address2,topup,topupamount,x,sender_secret_key_List):
+def WalletConnect(api_endpoint,Wallet_Address,Wallet_Address2,topup,topupamount,x,sender_secret_key_List,ThreadAmount):
     client = Client(api_endpoint)   
     if(client.is_connected()):
     
         sender = Keypair.from_secret_key(sender_secret_key)
         #print(sender.secret_key)
         #print(sender.public_key)
-        if(Threads > 19):
+        if(ThreadAmount > 19):
           receiver = Keypair.from_secret_key(sender_secret_key_List[x])
         else:
           receiver = Keypair.from_secret_key(bytes(PublicKey(x)))
@@ -146,8 +146,8 @@ if(client.is_connected()):
             
 
 
-for y in range(Threads):
-        x = threading.Thread(target=WalletConnect, args=(api_endpoint,Wallet_Address1,Wallet_Address2,topup,topupamount,y,sender_secret_key_List,))
+for y in range(ThreadAmount):
+        x = threading.Thread(target=WalletConnect, args=(api_endpoint,Wallet_Address1,Wallet_Address2,topup,topupamount,y,sender_secret_key_List,ThreadAmount,))
         threads.append(x)
         x.start()
 
