@@ -152,4 +152,4 @@ for y in range(ThreadAmount):
         x.start()
 
 
-print("done")
+print("done setting up, now threads take over and run")
