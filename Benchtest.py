@@ -81,7 +81,7 @@ def WalletConnect(api_endpoint,Wallet_Address,Wallet_Address2,topup,topupamount,
         #print(sender.secret_key)
         #print(sender.public_key)
         #receiver = Keypair.from_secret_key(sender_secret_key_List[x])
-        receiver = Keypair.from_secret_key(x)
+        receiver = Keypair.from_secret_key(bytes(PublicKey(x)))
         #print(receiver.secret_key)
         #print(receiver.public_key)
         spre = 0
